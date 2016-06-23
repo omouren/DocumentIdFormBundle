@@ -1,0 +1,6 @@
+{% block document_id_widget %}
+    {% spaceless %}
+        {%- set value = form.vars.data ? attribute(form.vars.data, property) : value -%}
+        {{ block('form_widget_simple') }}
+    {% endspaceless %}
+{% endblock %}

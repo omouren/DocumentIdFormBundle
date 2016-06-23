@@ -1,0 +1,7 @@
+services:
+    omouren.form.type.document.id:
+            class: Omouren\DocumentIdFormBundle\Type\DocumentIdType
+            arguments:
+                - '@doctrine.odm.mongodb.document_manager'
+            tags:
+                - { name: form.type, alias: document_id}
