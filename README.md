@@ -1,5 +1,5 @@
 # DocumentIdFormBundle
-Provides the form type "document_id"
+Provides the form type "document_id" using Doctrine ODM.
 Based on the work of [Gregwar : FormBundle](https://github.com/Gregwar/FormBundle)
 
 Installation
