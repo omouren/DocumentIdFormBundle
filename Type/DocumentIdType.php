@@ -31,7 +31,6 @@ class DocumentIdType extends AbstractType
                 $this->dm,
                 $options['class'],
                 $options['property'],
-                $options['query_builder'],
                 $options['multiple']
             )
         );
@@ -46,7 +45,6 @@ class DocumentIdType extends AbstractType
         $resolver->setDefaults([
             'dm'            => null,
             'property'      => null,
-            'query_builder' => null,
             'hidden'        => true,
             'multiple'      => false,
         ]);

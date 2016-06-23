@@ -18,26 +18,19 @@ class DocumentToIdTransformer implements DataTransformerInterface
     private $dm;
     private $class;
     private $property;
-    private $queryBuilder;
     private $multiple;
     private $unitOfWork;
 
-    public function __construct(DocumentManager $dm, $class, $property, $queryBuilder, $multiple)
+    public function __construct(DocumentManager $dm, $class, $property, $multiple)
     {
-        if (!(null === $queryBuilder || $queryBuilder instanceof Builder || $queryBuilder instanceof \Closure)) {
-            throw new UnexpectedTypeException($queryBuilder, 'Doctrine\MongoDB\Query\Builder or \Closure');
-        }
         if (null === $class) {
             throw new UnexpectedTypeException($class, 'string');
         }
         $this->dm = $dm;
         $this->unitOfWork = $this->dm->getUnitOfWork();
         $this->class = $class;
-        $this->queryBuilder = $queryBuilder;
         $this->multiple = $multiple;
-        if ($property) {
-            $this->property = $property;
-        }
+        $this->property = $property;
     }
 
     public function transform($data)
@@ -87,23 +80,9 @@ class DocumentToIdTransformer implements DataTransformerInterface
         $dm = $this->dm;
         $class = $this->class;
         $repository = $dm->getRepository($class);
-        $qb = $this->queryBuilder;
-        if ($qb) {
-            if ($qb instanceof \Closure) {
-                $qb = $qb($repository, $data);
-            }
-            try {
-                $result = $qb->getQuery()->getSingleResult();
-            } catch (\Exception $e) {
-                $result = null;
-            }
-        } else {
-            if ($this->property) {
-                $result = $repository->findOneBy([$this->property => $data]);
-            } else {
-                $result = $repository->find($data);
-            }
-        }
+
+        $result = $repository->findOneBy([$this->property => $data]);
+
         if (!$result) {
             throw new TransformationFailedException('Can not find document');
         }
