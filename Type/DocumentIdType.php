@@ -40,7 +40,6 @@ class DocumentIdType extends AbstractType
     {
         $resolver->setRequired([
             'class',
-            'property',
         ]);
         $resolver->setDefaults([
             'dm'            => null,
@@ -55,7 +54,11 @@ class DocumentIdType extends AbstractType
         if (true === $options['hidden']) {
             $view->vars['type'] = 'hidden';
         }
-        $view->vars['property'] = $options['property'];
+        if ($options['property'] === null) {
+            $view->vars['property'] = $this->dm->getMetadataFactory()->getMetadataFor($options['class'])->getIdentifier()[0];
+        } else {
+            $view->vars['property'] = $options['property'];
+        }
     }
 
     public function getParent()

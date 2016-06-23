@@ -45,12 +45,11 @@ The usage look like the document field type one, except that the query returns o
 $builder
     ->add('city', 'document_id', [
         'class' => 'Project\Entity\City',
-        'property' => 'id',
     ])
     ;
 ```
 
-Here `->findOneBy(['id' => $value])` will be used.
+Here `->find($value)` will be used.
 
 You can also chose to show the field, by passing the `hidden` option to `false`:
 
@@ -60,7 +59,6 @@ You can also chose to show the field, by passing the `hidden` option to `false`:
 $builder
     ->add('city', 'document_id', array(
         'class' => 'Project\Entity\City',
-        'property' => 'id',
         'hidden' => false,
         'label' => 'Enter the City id'
     ))

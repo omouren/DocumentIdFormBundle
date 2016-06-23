@@ -81,9 +81,14 @@ class DocumentToIdTransformer implements DataTransformerInterface
         $class = $this->class;
         $repository = $dm->getRepository($class);
 
-        $result = $repository->findOneBy([$this->property => $data]);
+        if ($this->property) {
+            $result = $repository->findOneBy([$this->property => $data]);
+        } else {
+            $result = $repository->find($data);
+        }
 
         if (!$result) {
+            dump('erreur');
             throw new TransformationFailedException('Can not find document');
         }
 
