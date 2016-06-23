@@ -1,6 +1,6 @@
 # DocumentIdFormBundle
 Provides the form type "document_id"
-Based on the work of Gregwar
+Based on the work of [Gregwar : FormBundle](https://github.com/Gregwar/FormBundle)
 
 Installation
 ============
