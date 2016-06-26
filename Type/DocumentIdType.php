@@ -59,6 +59,14 @@ class DocumentIdType extends AbstractType
         } else {
             $view->vars['property'] = $options['property'];
         }
+
+        if ($view->vars['data'] && !($view->vars['data'] instanceof $options['class'])) {
+            if ($options['property']) {
+                $view->vars['data'] = $this->dm->getRepository($options['class'])->findOneBy([$options['property'] => $view->vars['data']]);
+            } else {
+                $view->vars['data'] = $this->dm->getRepository($options['class'])->find($view->vars['data']);
+            }
+        }
     }
 
     public function getParent()
